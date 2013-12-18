@@ -1,2 +1,3 @@
 require('./test/Room-tests');
-require('./test/User-tests');
+require('./test/UserMixin-tests');
+require('./test/RoomManager-tests');

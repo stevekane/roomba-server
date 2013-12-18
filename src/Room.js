@@ -1,5 +1,6 @@
 var inherits = require('util').inherits
   , EventEmitter = require('events').EventEmitter
+  , uuid = require('node-uuid')
   , _ = require('lodash')
   , throwUnless = require('power-throw').throwUnless
   , throwIf = require('power-throw').throwIf
@@ -7,15 +8,11 @@ var inherits = require('util').inherits
 var Room = function (name) {
   throwUnless("Must provide name for your room", name);
   this.users = []; 
+  this.id = uuid.v4();
   this.name = name;
 };
 
 inherits(Room, EventEmitter);
-
-Room.prototype.initialize = function () {
-  this.emit('init', this);
-  return this;
-};
 
 Room.prototype.addUser = function (user) {
   var userNotUnique = _.any(this.users, {id: user.id});

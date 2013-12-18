@@ -15,13 +15,14 @@ test("Room constructs a new instance and inherits from EventEmitter", function (
 });
 
 test("Room should have several default properties defined", function (t) {
-  t.plan(2);
+  t.plan(3);
 
   var name = "test"
     , room = new Room(name)
 
   t.ok(isArray(room.users), "users is an array");
   t.ok(room.name === "test", "name assigned to instance"); 
+  t.ok(typeof room.id === "string", "id assigined to instance");
 });
 
 test("Room should throw if no name is provided", function (t) {
@@ -30,19 +31,6 @@ test("Room should throw if no name is provided", function (t) {
   t.throws(function () {
     new Room; 
   });
-});
-
-//initialize
-test("initialize should emit an 'init' event with self as argument", function (t) {
-  t.plan(1);
-
-  var testRoom = new Room("test")
-
-  testRoom.on("init", function (room) {
-    t.same(testRoom, room, "room passed to init handler");
-  });
-
-  testRoom.initialize();
 });
 
 //addUser
