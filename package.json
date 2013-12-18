@@ -17,5 +17,12 @@
     "roomba"
   ],
   "author": "Steve Kane",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "tape": "~2.3.2"
+  },
+  "dependencies": {
+    "power-throw": "0.0.1",
+    "lodash": "~2.4.1"
+  }
 }

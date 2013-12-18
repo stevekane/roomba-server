@@ -1,0 +1,1 @@
+require('./test/Room-tests');
