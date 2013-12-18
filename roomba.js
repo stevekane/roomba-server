@@ -16,22 +16,12 @@ room.on("userJoined", function (room, user) {
 
 rm.addRoom(room);
 
-//when a use establishes a connection do this:
-rm.on("user-start", function (socket, data) {
-  var user = new User(socket, {name: "new-guy"});
+/**
+When events come from the client, it will have a socket, a message, and
+a json body.  
 
-  rm.getLobby().addUser(user); 
-  console.log('userStart fired');
-  socket.emit('roomba-start-confirm', user);
-});
-
-//when a connection is re-established do this:
-rm.on("user-resume", function (socket, data) {
-  console.log("resumed!");
-  //DO STUFF...
-});
-
-rm.on("user-disconnect", function (socket, data) {
-  console.log("disconnected!");
-  //DO STUFF...
-});
+'connection' -> setup handlers
+  'roomba-begin' -> create user, return that user to the socket
+  'roomba-resume' -> lookup user with provided id, return it or create a new user
+  '
+*/

@@ -1,6 +1,5 @@
 var EventEmitter = require('events').EventEmitter
   , inherits = require('util').inherits
-  , engine = require('engine.io')
   , _ = require('lodash')
   , throwUnless = require('power-throw').throwUnless
   , Room = require('./Room')
@@ -13,16 +12,12 @@ RoomManager a manager of rooms.
  connection - > create a user using the socket object provided
  disconnect - > destroy the socket and user object.  remove them from rooms
 */
-var RoomManager = function (port, options) {
-  throwUnless("Must provide port to RoomManager constructor", port);
-  var options = options || {}
-    , server = options.server || engine.listen(port);
-
+var RoomManager = function (server, lobby) {
+  throwUnless("Must provide server to RoomManager constructor", server);
+  throwUnless("Must provide lobby to RoomManager constructor", lobby);
   this.rooms = {};
-  this.lobby = options.lobby || new Room("Lobby");
-  this.server = options.server || server;
-
-  configSocketHandlers(server, this);
+  this.lobby = lobby;
+  this.server = server;
 };
 
 inherits(RoomManager, EventEmitter);
@@ -56,26 +51,8 @@ RoomManager.prototype.getLobby = function () {
 };
 
 RoomManager.prototype.close = function () {
-  this.server.httpServer.close();
+  this.server.server.close();
   return this;
 };
-
-function configSocketHandlers (server, roomManager) {
-  server.on("connection", function (socket) {
-    socket.on("roomba-start", function (data) {
-      console.log('git it');
-      roomManager.emit('user-start', socket, data);
-    });
-    socket.on("roomba-resume", function (data) {
-      roomManager.emit('user-resume', socket, data); 
-    });
-    socket.on("disconnect", function (data) {
-      roomManager.emit('user-disconnect', socket, data); 
-    });
-    socket.send(JSON.stringify({message:"roomba-connected"}));
-  });
-
-  return server;
-}
 
 module.exports = RoomManager;
