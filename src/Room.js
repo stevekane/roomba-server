@@ -8,7 +8,6 @@ var Room = function (name) {
   throwUnless("Must provide name for your room", name);
   this.users = []; 
   this.name = name;
-  this.emit('init', this);
 };
 
 inherits(Room, EventEmitter);
