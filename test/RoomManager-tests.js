@@ -1,5 +1,4 @@
-var EventEmitter = require('events').EventEmitter
-  , test = require('tape')
+var test = require('tape')
   , socketIO = require('socket.io')
   , _ = require('lodash')
   , isArray = require('util').isArray
@@ -18,14 +17,6 @@ test("RoomManager is a constructor that throws if not provided a server and lobb
   t.throws(function () {
     new RoomManager();
   });
-});
-
-test("RoomManager should inherit from EventEmitter", function (t) {
-  t.plan(1);
-
-  var r = new RoomManager(server, lobby);
-
-  t.ok(r instanceof EventEmitter, "roomManager is an instance of EventEmitter");
 });
 
 test("RoomManager should set several attributes", function (t) {

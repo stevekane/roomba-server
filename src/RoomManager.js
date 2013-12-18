@@ -1,17 +1,7 @@
-var EventEmitter = require('events').EventEmitter
-  , inherits = require('util').inherits
-  , _ = require('lodash')
+var _ = require('lodash')
   , throwUnless = require('power-throw').throwUnless
   , Room = require('./Room')
 
-/**
-RoomManager a manager of rooms. 
--Manage rooms
--Create Lobby instance
--Wraps an engine.io server and wraps several custom socket events
- connection - > create a user using the socket object provided
- disconnect - > destroy the socket and user object.  remove them from rooms
-*/
 var RoomManager = function (server, lobby) {
   throwUnless("Must provide server to RoomManager constructor", server);
   throwUnless("Must provide lobby to RoomManager constructor", lobby);
@@ -19,8 +9,6 @@ var RoomManager = function (server, lobby) {
   this.lobby = lobby;
   this.server = server;
 };
-
-inherits(RoomManager, EventEmitter);
 
 RoomManager.prototype.addRoom = function (room) {
   this.rooms[room.id] = room;
