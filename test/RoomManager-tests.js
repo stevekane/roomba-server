@@ -1,4 +1,5 @@
-var test = require('tape')
+var EventEmitter = require('events').EventEmitter
+  , test = require('tape')
   , _ = require('lodash')
   , isArray = require('util').isArray
   , RoomManager = require('./../src/RoomManager')
@@ -13,6 +14,15 @@ test("RoomManager is a constructor that throws if not provided a port", function
   t.throws(function () {
     new RoomManager();
   });
+  r.close();
+});
+
+test("RoomManager should inherit from EventEmitter", function (t) {
+  t.plan(1);
+
+  var r = new RoomManager(8080);
+
+  t.ok(r instanceof EventEmitter, "roomManager is an instance of EventEmitter");
   r.close();
 });
 
@@ -72,6 +82,34 @@ test("RoomManager.getRooms should return an array of rooms", function (t) {
   
   t.ok(_.contains(rooms, room), "rooms contained the room that was added");
   t.ok(isArray(rooms), "rooms is an array");
+
+  r.close();
+});
+
+//RoomManager.getRoomByName
+test("RoomManager.getRoomByName should return an room with the provided name", function (t) {
+  t.plan(2);
+
+  var r = new RoomManager(8080)
+    , room = {id: 1, name: "test"}
+    , targetRoom;
+
+  r.addRoom(room);
+  targetRoom = r.getRoomByName("test");
+  
+  t.same(targetRoom.id, room.id, "found room id matched added room id");
+  t.same(targetRoom.name, room.name, "found room name matches added room name");
+
+  r.close();
+});
+
+//RoomManager.getLobby
+test("RoomManager.getLobby should return the lobby", function (t) {
+  t.plan(1); 
+
+  var r = new RoomManager(8080);
+  
+  t.ok(r.getLobby().name === "Lobby", "getLobby returns the Lobby");
 
   r.close();
 });
