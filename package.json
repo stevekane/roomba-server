@@ -25,6 +25,7 @@
     "power-throw": "0.0.1",
     "lodash": "~2.4.1",
     "node-uuid": "~1.4.1",
-    "engine.io": "~0.7.12"
+    "engine.io": "~0.7.12",
+    "socket.io": "~0.9.16"
   }
 }

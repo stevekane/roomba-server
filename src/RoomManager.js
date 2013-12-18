@@ -62,15 +62,17 @@ RoomManager.prototype.close = function () {
 
 function configSocketHandlers (server, roomManager) {
   server.on("connection", function (socket) {
-    socket.on("socket-start", function (data) {
-      roomManager.emit('login', socket, data);
+    socket.on("roomba-start", function (data) {
+      console.log('git it');
+      roomManager.emit('user-start', socket, data);
     });
-    socket.on("socket-resume", function (data) {
-      roomManager.emit('resume', socket, data); 
+    socket.on("roomba-resume", function (data) {
+      roomManager.emit('user-resume', socket, data); 
     });
     socket.on("disconnect", function (data) {
-      roomManager.emit('socket-disconnect', socket, data); 
+      roomManager.emit('user-disconnect', socket, data); 
     });
+    socket.send(JSON.stringify({message:"roomba-connected"}));
   });
 
   return server;

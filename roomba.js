@@ -17,20 +17,21 @@ room.on("userJoined", function (room, user) {
 rm.addRoom(room);
 
 //when a use establishes a connection do this:
-rm.on("socket-start", function (socket, data) {
+rm.on("user-start", function (socket, data) {
   var user = new User(socket, {name: "new-guy"});
 
   rm.getLobby().addUser(user); 
-  socket.emit('socket-start-confirm', user);
+  console.log('userStart fired');
+  socket.emit('roomba-start-confirm', user);
 });
 
 //when a connection is re-established do this:
-rm.on("socket-resume", function (socket, data) {
+rm.on("user-resume", function (socket, data) {
   console.log("resumed!");
   //DO STUFF...
 });
 
-rm.on("socket-disconnect", function (socket, data) {
+rm.on("user-disconnect", function (socket, data) {
   console.log("disconnected!");
   //DO STUFF...
 });
