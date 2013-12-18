@@ -1,0 +1,21 @@
+{
+  "name": "roomba-server",
+  "version": "0.0.1",
+  "description": "Multiplayer game server designed for use with websockets.  Manages rooms and users!",
+  "main": "roomba.js",
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stevekane/roomba-server.js"
+  },
+  "keywords": [
+    "games",
+    "websocket",
+    "cloak",
+    "roomba"
+  ],
+  "author": "Steve Kane",
+  "license": "MIT"
+}
