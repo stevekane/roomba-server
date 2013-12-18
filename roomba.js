@@ -1,27 +1,22 @@
-var UserMixin = require('./src/UserMixin')
+var socketIO = require('socket.io')
+  , UserMixin = require('./src/UserMixin')
   , Room = require('./src/Room')
-  , RoomManager = require('./src/RoomManager')
+  , RoomManager = require('./src/RoomManager');
 
 //Create a User Model
 var User = function (socket, name) {
   UserMixin.call(this, socket, name);
 };
 
-var rm = new RoomManager(8080)
-  , room = new Room("example")
+//create our websocket server
+var server = socketIO.listen(8080);
 
-room.on("userJoined", function (room, user) {
-  console.log(user.id, "joined", room.name);
+server.sockets.on("connection", function (socket) {
+  socket.emit('yay'); 
 });
 
-rm.addRoom(room);
+//create lobby instance
+var lobby = new Room("Lobby");
 
-/**
-When events come from the client, it will have a socket, a message, and
-a json body.  
-
-'connection' -> setup handlers
-  'roomba-begin' -> create user, return that user to the socket
-  'roomba-resume' -> lookup user with provided id, return it or create a new user
-  '
-*/
+//create room manager and pass in our socketserver and lobby
+var rm = new RoomManager(server, lobby);
