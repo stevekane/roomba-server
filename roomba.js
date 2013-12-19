@@ -1,5 +1,5 @@
 module.exports = {
   UserMixin: require('./src/UserMixin'),
-  Room: require('./src/Room'),
+  RoomMixin: require('./src/RoomMixin'),
   RoomManager: require('./src/RoomManager')
 }
