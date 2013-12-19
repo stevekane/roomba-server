@@ -71,18 +71,6 @@ test("DiffUser should have id of 4 and NOT one assigned by UserMixin", function 
   t.same(4, du.id, "id of user instance is assigned by the object mixing it in");
 });
 
-//toJSON
-test("UserMixin.toJSON should return an object with the id and name of the user", function (t) {
-  t.plan(2);
-
-  var socket = {}
-    , du = new UserMixin({}, "test-user")
-    , json = du.toJSON();
-  
-  t.same(du.id, json.id, "id returned from toJSON");
-  t.same(du.name, json.name, "name returned from toJSON");
-});
-
 test("UserMixin.message should emit a message with name and data provided", function (t) {
   t.plan(1);
 
