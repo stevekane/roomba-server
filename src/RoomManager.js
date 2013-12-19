@@ -8,6 +8,7 @@ var RoomManager = function (server, lobby) {
   this.rooms = {};
   this.lobby = lobby;
   this.server = server;
+  this.socketToUserMap = {};
 };
 
 RoomManager.prototype.addRoom = function (room) {

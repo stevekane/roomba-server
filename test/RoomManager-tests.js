@@ -20,13 +20,14 @@ test("RoomManager is a constructor that throws if not provided a server and lobb
 });
 
 test("RoomManager should set several attributes", function (t) {
-  t.plan(3);
+  t.plan(4);
 
   var r = new RoomManager(server, lobby);
 
   t.ok(typeof r.rooms === "object", "room instance has object attribute rooms");
   t.ok(typeof r.server=== "object", "room instance has object attribute server");
   t.ok(typeof r.lobby === "object", "room instance has object attribute called lobby");
+  t.ok(typeof r.socketToUserMap === "object", "room instance has socketToUserMap");
 });
 
 //RoomManager.addRoom
