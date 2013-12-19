@@ -1,6 +1,6 @@
 {
   "name": "roomba-server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Multiplayer game server designed for use with websockets.  Manages rooms and users!",
   "main": "roomba.js",
   "scripts": {
