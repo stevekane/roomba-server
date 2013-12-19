@@ -1,4 +1,5 @@
 var isArray = require('util').isArray
+  , EventEmitter = require('events').EventEmitter
   , _ = require('lodash')
   , test = require('tape')
   , UserMixin = require('./../src/UserMixin')
@@ -80,4 +81,18 @@ test("UserMixin.toJSON should return an object with the id and name of the user"
   
   t.same(du.id, json.id, "id returned from toJSON");
   t.same(du.name, json.name, "name returned from toJSON");
+});
+
+test("UserMixin.message should emit a message with name and data provided", function (t) {
+  t.plan(1);
+
+  var socket = new EventEmitter
+    , um = new UserMixin(socket, "test-user")
+    , messageName = "ping"
+    , data = {test: "winning"};
+
+  socket.on("ping", function (messageData) {
+    t.same(messageData, data, "message data sent through to the socket");
+  });
+  um.message(messageName, data);
 });

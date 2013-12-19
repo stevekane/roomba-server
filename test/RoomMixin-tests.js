@@ -2,34 +2,34 @@ var isArray = require('util').isArray
   , EventEmitter = require('events').EventEmitter
   , _ = require('lodash')
   , test = require('tape')
-  , Room = require('./../src/Room')
+  , RoomMixin = require('./../src/RoomMixin')
 
-test("Room constructs a new instance and inherits from EventEmitter", function (t) {
+test("RoomMixin constructs a new instance and inherits from EventEmitter", function (t) {
   t.plan(3);
 
-  var room = new Room("test");
+  var room = new RoomMixin("test");
 
-  t.ok(typeof Room === "function", "Room is a constructor");
-  t.ok(typeof room === "object", "new Room returns an instance");
+  t.ok(typeof RoomMixin === "function", "RoomMixin is a constructor");
+  t.ok(typeof room === "object", "new RoomMixin returns an instance");
   t.ok(room instanceof EventEmitter, "room is an instance of EventEmitter");
 });
 
-test("Room should have several default properties defined", function (t) {
+test("RoomMixin should have several default properties defined", function (t) {
   t.plan(3);
 
   var name = "test"
-    , room = new Room(name)
+    , room = new RoomMixin(name)
 
   t.ok(isArray(room.users), "users is an array");
   t.ok(room.name === "test", "name assigned to instance"); 
   t.ok(typeof room.id === "string", "id assigined to instance");
 });
 
-test("Room should throw if no name is provided", function (t) {
+test("RoomMixin should throw if no name is provided", function (t) {
   t.plan(1);
 
   t.throws(function () {
-    new Room; 
+    new RoomMixin; 
   });
 });
 
@@ -37,7 +37,7 @@ test("Room should throw if no name is provided", function (t) {
 test("addUser should throw if a user with the same id is already in it", function (t) {
   t.plan(1);
 
-  var room = new Room("test");
+  var room = new RoomMixin("test");
 
   room.addUser({id: 1});
 
@@ -49,7 +49,7 @@ test("addUser should throw if a user with the same id is already in it", functio
 test("addUser should add a room attribute to the user that is itself", function (t) {
   t.plan(1);
 
-  var room = new Room("test")
+  var room = new RoomMixin("test")
     , user = {id: 1}
 
   room.addUser(user);
@@ -60,21 +60,21 @@ test("addUser should add a room attribute to the user that is itself", function 
 test("addUser should emit a 'userJoined' event with signature user, room, params...", function (t) {
   t.plan(2);
 
-  var testRoom = new Room("test")
+  var testRoomMixin = new RoomMixin("test")
     , testUser = {id: 1}
 
-  testRoom.on("userJoined", function (room, user) {
+  testRoomMixin.on("userJoined", function (room, user) {
     t.same(testUser, user, "user passed to userJoined handler");
-    t.same(testRoom, room, "room passed to userJoined handler");
+    t.same(testRoomMixin, room, "room passed to userJoined handler");
   });
-  testRoom.addUser(testUser);
+  testRoomMixin.addUser(testUser);
 });
 
 //removeUser
 test("removeUser should set the room attribute of the user to null", function (t) {
   t.plan(1);
 
-  var room = new Room("test")
+  var room = new RoomMixin("test")
     , user = {id: 1}
 
   room.addUser(user);
@@ -86,21 +86,21 @@ test("removeUser should set the room attribute of the user to null", function (t
 test("removeUser should emit a 'userLeft' event with signature user, room, params...", function (t) {
   t.plan(2);
 
-  var testRoom = new Room("test")
+  var testRoomMixin = new RoomMixin("test")
     , testUser = {id: 1}
 
-  testRoom.on("userLeft", function (room, user) {
+  testRoomMixin.on("userLeft", function (room, user) {
     t.same(testUser, user, "user passed to userLeft handler");
-    t.same(testRoom, room, "room passed to userLeft handler");
+    t.same(testRoomMixin, room, "room passed to userLeft handler");
   });
-  testRoom.addUser(testUser);
-  testRoom.removeUser(testUser);
+  testRoomMixin.addUser(testUser);
+  testRoomMixin.removeUser(testUser);
 });
 
 test("getUsers should return the users as an array", function (t) {
   t.plan(2);
 
-  var room = new Room("test")
+  var room = new RoomMixin("test")
     , testUser = {id: 1}
     , users = room.addUser(testUser).getUsers();
 

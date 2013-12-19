@@ -1,6 +1,5 @@
 var _ = require('lodash')
-  , throwUnless = require('power-throw').throwUnless
-  , Room = require('./Room')
+  , throwUnless = require('power-throw').throwUnless;
 
 var RoomManager = function (server, lobby) {
   throwUnless("Must provide server to RoomManager constructor", server);

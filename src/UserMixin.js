@@ -2,7 +2,7 @@ var uuid = require('node-uuid')
   , throwUnless = require('power-throw').throwUnless;
 
 /**
-User is intended to be used as a mixin!
+UserMixin is intended to be used as a mixin!
 For example, using node's util.inherits
 and node-uuid
 
@@ -27,6 +27,10 @@ UserMixin.prototype.toJSON = function () {
     id: this.id,
     name: this.name
   };
+};
+
+UserMixin.prototype.message = function (name, data) {
+  this.socket.emit(name, data);
 };
 
 module.exports = UserMixin;

@@ -5,16 +5,16 @@ var inherits = require('util').inherits
   , throwUnless = require('power-throw').throwUnless
   , throwIf = require('power-throw').throwIf
 
-var Room = function (name) {
+var RoomMixin = function (name) {
   throwUnless("Must provide name for your room", name);
   this.users = []; 
   this.id = uuid.v4();
   this.name = name;
 };
 
-inherits(Room, EventEmitter);
+inherits(RoomMixin, EventEmitter);
 
-Room.prototype.addUser = function (user) {
+RoomMixin.prototype.addUser = function (user) {
   var userNotUnique = _.any(this.users, {id: user.id});
 
   throwIf("user already in room!", userNotUnique);
@@ -24,7 +24,7 @@ Room.prototype.addUser = function (user) {
   return this;
 };
 
-Room.prototype.removeUser = function (user) {
+RoomMixin.prototype.removeUser = function (user) {
   var user = _.find(this.users, {id: user.id});
 
   _.remove(this.users, user);
@@ -33,13 +33,14 @@ Room.prototype.removeUser = function (user) {
   return this;
 };
 
-Room.prototype.getUsers = function () {
+RoomMixin.prototype.getUsers = function () {
   return this.users;
 };
 
-Room.prototype.tick = function () {
+//probably will be overwritten for most classes
+RoomMixin.prototype.tick = function () {
   this.emit('tick', this, this.users);
   return this;
 };
 
-module.exports = Room;
+module.exports = RoomMixin;
