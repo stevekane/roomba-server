@@ -6,6 +6,7 @@ var RoomManager = function (server, lobby) {
   throwUnless("Must provide lobby to RoomManager constructor", lobby);
   this.rooms = {};
   this.lobby = lobby;
+  lobby.roomManager = this;
   this.server = server;
   this.socketToUserMap = {};
 };
