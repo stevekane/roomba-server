@@ -4,7 +4,7 @@ var test = require('tape')
   , isArray = require('util').isArray
   , RoomManager = require('./../src/RoomManager')
 
-var server = socketIO.listen(8080);
+var server = socketIO.listen(8070);
 var lobby = {name: "Lobby"};
 
 test("RoomManager is a constructor that throws if not provided a server and lobby", function (t) {
